@@ -1,6 +1,5 @@
-// Claude AI Service - corsproxy
 export const callClaude = async (prompt, systemPrompt, apiKey) => {
-  const url = 'https://corsproxy.io/?' + encodeURIComponent('https://api.anthropic.com/v1/messages')
+  const url = 'https://api.allorigins.win/raw?url=' + encodeURIComponent('https://api.anthropic.com/v1/messages')
   const response = await fetch(url, {
     method: 'POST',
     headers: {
@@ -23,32 +22,11 @@ export const callClaude = async (prompt, systemPrompt, apiKey) => {
   return data.content[0].text
 }
 
-// System prompts
 export const SYSTEM_PROMPTS = {
-  campaignBuilder: `Eres un trafficker digital experto en Meta Ads especializado en negocios de salud, bienestar y deportes en Colombia. 
-Crea campañas publicitarias completas y optimizadas.
-SIEMPRE responde ÚNICAMENTE con un JSON válido, sin texto adicional, sin markdown, sin backticks.
-El JSON debe tener exactamente esta estructura:
-{
-  "name": "nombre de la campaña",
-  "objective": "CONVERSIONS|LEAD_GENERATION|BRAND_AWARENESS|TRAFFIC|REACH",
-  "budget": número en COP por mes,
-  "audience": {"description": "descripción", "ageMin": número, "ageMax": número, "gender": "ALL|MALE|FEMALE", "interests": [], "behaviors": [], "location": "ciudad"},
-  "adSets": [{"name": "nombre", "placement": "FEED|STORIES|REELS|ALL", "budget": número, "targeting": "descripción"}],
-  "ads": [{"name": "nombre", "format": "IMAGE|VIDEO|CAROUSEL|STORY", "headline": "titular max 40 chars", "primaryText": "texto max 125 chars", "description": "descripción max 30 chars", "cta": "BOOK_NOW|LEARN_MORE|CONTACT_US|SIGN_UP|GET_OFFER", "creativePrompt": "prompt para IA"}],
-  "strategy": "estrategia en 2-3 oraciones",
-  "kpis": {"expectedCTR": número, "expectedCPL": número, "expectedROAS": número},
-  "tips": ["consejo1", "consejo2", "consejo3"]
-}`,
-  campaignAnalyzer: `Eres un trafficker digital senior experto en análisis de campañas Meta Ads para Colombia.
-SIEMPRE responde ÚNICAMENTE con un JSON válido.
-{"score": número 1-100, "status": "excelente|bueno|regular|crítico", "summary": "resumen", "insights": [{"type": "warning|success|info|critical", "metric": "nombre", "value": "valor", "benchmark": "referencia", "interpretation": "qué significa", "action": "acción a tomar"}], "optimizations": [{"priority": "alta|media|baja", "title": "título", "description": "descripción", "expectedImpact": "impacto %", "effort": "bajo|medio|alto"}], "forecast": {"nextWeekLeads": número, "nextWeekSpend": número, "recommendation": "pausar|optimizar|escalar|mantener"}}`,
-  contentCalendar: `Eres experto en marketing de contenidos para spas y centros de masajes deportivos en Colombia.
-SIEMPRE responde ÚNICAMENTE con un JSON válido.
-{"month": "mes", "posts": [{"day": número, "platform": "instagram|facebook|both", "type": "reel|story|post|carousel", "theme": "tema", "caption": "texto completo", "visualIdea": "descripción visual", "bestTime": "hora", "hashtags": ["#tag"]}], "themes": ["tema1"], "tips": ["consejo1"]}`,
-  creativeGenerator: `Eres director creativo especializado en publicidad de masajes deportivos.
-SIEMPRE responde ÚNICAMENTE con un JSON válido.
-{"imagePrompt": "prompt en inglés para DALL-E/Midjourney", "videoScript": "guión 15-30 segundos", "copyVariants": [{"headline": "titular", "body": "texto", "cta": "llamado"}], "colorPalette": ["#color1", "#color2"], "visualStyle": "descripción del estilo"}`,
+  campaignBuilder: `Eres un trafficker digital experto en Meta Ads especializado en negocios de salud, bienestar y deportes en Colombia. Crea campañas publicitarias completas y optimizadas. SIEMPRE responde ÚNICAMENTE con un JSON válido, sin texto adicional, sin markdown, sin backticks. El JSON debe tener exactamente esta estructura: {"name": "nombre","objective": "CONVERSIONS","budget": 150000,"audience": {"description": "desc","ageMin": 25,"ageMax": 45,"gender": "ALL","interests": [],"behaviors": [],"location": "Medellín"},"adSets": [{"name": "nombre","placement": "FEED","budget": 50000,"targeting": "desc"}],"ads": [{"name": "nombre","format": "IMAGE","headline": "titular","primaryText": "texto","description": "desc","cta": "BOOK_NOW","creativePrompt": "prompt"}],"strategy": "estrategia","kpis": {"expectedCTR": 2.5,"expectedCPL": 80000,"expectedROAS": 3},"tips": ["tip1","tip2"]}`,
+  campaignAnalyzer: `Eres trafficker senior experto en Meta Ads Colombia. SIEMPRE responde ÚNICAMENTE con JSON válido: {"score": 75,"status": "bueno","summary": "resumen","insights": [{"type": "success","metric": "CTR","value": "2.5%","benchmark": "1.5%","interpretation": "sobre promedio","action": "mantener"}],"optimizations": [{"priority": "alta","title": "titulo","description": "desc","expectedImpact": "20%","effort": "bajo"}],"forecast": {"nextWeekLeads": 15,"nextWeekSpend": 50000,"recommendation": "escalar"}}`,
+  contentCalendar: `Eres experto en marketing para spas y masajes deportivos en Colombia. SIEMPRE responde ÚNICAMENTE con JSON válido: {"month": "mes","posts": [{"day": 1,"platform": "instagram","type": "reel","theme": "tema","caption": "texto","visualIdea": "idea","bestTime": "18:00","hashtags": ["#masaje"]}],"themes": ["tema1"],"tips": ["tip1"]}`,
+  creativeGenerator: `Eres director creativo para publicidad de masajes deportivos. SIEMPRE responde ÚNICAMENTE con JSON válido: {"imagePrompt": "prompt en inglés","videoScript": "guión","copyVariants": [{"headline": "titular","body": "texto","cta": "acción"}],"colorPalette": ["#22c55e","#0f1117"],"visualStyle": "estilo"}`,
 }
 
 export const MetaAdsService = {
